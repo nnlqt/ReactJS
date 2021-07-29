@@ -1,8 +1,9 @@
 import './App.css';
 import { useCallback, useState, useEffect } from 'react';
 import { MessageBord } from './components/MessageBord/MessageBord.js';
-import { Form } from './components/Form/Form.js';
 import { AUTHORS } from './constants';
+import { MyTextField } from './components/Material/TextField';
+import { MyList } from './components/Material/List';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -30,13 +31,16 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>
-          Welcome to MyChat
+          Welcome to #MyChat
         </h1>
-      </header> 
-      <section className="App-bord">
+      </header>
+      <section className='App-page'>
+      <MyList />
+      <main className="App-bord">
         <MessageBord messages={messages} />
-        <Form onSendMessage={handleSendMessage} />
-      </section>
+        <MyTextField onSendMessage={handleSendMessage} />
+      </main>
+      </section> 
       <footer className="App-footer"></footer>
     </div>
   );
