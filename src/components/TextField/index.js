@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { MyButton } from './Button';
+import { MyButton } from '../Button';
 import { AUTHORS } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +39,7 @@ export function MyTextField({onSendMessage}) {
   return (
     <form id='send' className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit} >
       <TextField 
+      value={value}
       autoFocus={true}
       onChange={(e) => setValue(e.target.value)}
       label="Enter your message"
