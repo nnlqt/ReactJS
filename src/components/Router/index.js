@@ -1,15 +1,21 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import Chats from '../Chats';
 import { NoChat } from '../NoChat';
 import { Profile } from '../Profile';
+import { ThemeContext } from '../Utils/ThemeContext';
 
 export const Router = () => {
+    const [bgColor, setBgColor] = useState('white')
+    const changeColor = () => {
+        setBgColor((prevColor) => (prevColor === 'white' ? 'gray' : 'white'));
+    };
     return (
+        <ThemeContext.Provider value={{ theme: bgColor, changeTheme: changeColor}}>
         <BrowserRouter>
             <ul>
-                <li><Link to='/chats'>Chats</Link></li>
-                <li><Link to='/profile'>Profile</Link></li>
+                <li style={{ backgroundColor: bgColor }} ><Link to='/chats'>Chats</Link></li>
+                <li style={{ backgroundColor: bgColor }} ><Link to='/profile'>Profile</Link></li>
             </ul>
 
             <Switch>
@@ -30,6 +36,7 @@ export const Router = () => {
                 </Route>
             </Switch>
         </BrowserRouter>
+        </ThemeContext.Provider>
     )
 }
 

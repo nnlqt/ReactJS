@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Link } from 'react-router-dom';
+import { ThemeContext } from '../Utils/ThemeContext';
 
 const drawerWidth = 240;
 
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function ChatList({ chats }) {
   const classes = useStyles();
+  const theme = useContext(ThemeContext);
   return (
     <div className={classes.root}>
         <List     
@@ -40,6 +42,7 @@ export function ChatList({ chats }) {
           backgroundColor: '#8f8888',
           gap: '5px'
           }}> 
+          <button onClick={theme.changeTheme}>Color</button>
           {Object.values(chats).map((c) => (
             <ListItem
               style={{
@@ -56,6 +59,6 @@ export function ChatList({ chats }) {
                   <Link to={`/chats/${c.id}`}>{c.name}</Link>
             </ListItem>))} 
         </List>
-    </div>    
+    </div>
   );
 }
