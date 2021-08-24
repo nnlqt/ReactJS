@@ -4,6 +4,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../Utils/ThemeContext';
+import { AddChat } from './AddChat';
+import { ChatItem } from './ChatItem';
 
 const drawerWidth = 240;
 
@@ -30,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function ChatList({ chats }) {
+export function ChatList({ chats, onDeleteChat }) {
+
   const classes = useStyles();
   const theme = useContext(ThemeContext);
   return (
@@ -43,21 +46,8 @@ export function ChatList({ chats }) {
           gap: '5px'
           }}> 
           <button onClick={theme.changeTheme}>Color</button>
-          {Object.values(chats).map((c) => (
-            <ListItem
-              style={{
-                  backgroundColor: '#9f9999',
-                  borderRadius: '10px',
-                  gap: '5px',
-                  minWidth: '100px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-              }}
-              button
-              key={c.id}> 
-                  <Link to={`/chats/${c.id}`}>{c.name}</Link>
-            </ListItem>))} 
+          {Object.values(chats).map((c) => <ChatItem name = {c.name} key={c.id} id={c.id} onDelete={onDeleteChat} />)}
+            <ListItem><AddChat /></ListItem>
         </List>
     </div>
   );

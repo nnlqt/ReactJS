@@ -1,23 +1,29 @@
-import React from 'react';
-import { PROFILE_TOGGLE_SHOW } from '../../store/actionTypes';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CheckBox } from '@material-ui/icons';
+import { changeName } from '../../store/profile/actions';
 
 export const Profile = () => {
-    const profileState = useSelector(state => state);
+    const [value, setValue] = useState('');
+    const name = useSelector((state) => state.profile.name);
     const dispatch = useDispatch();
 
-    const toggleShow = () => {
-        dispatch({
-            type: PROFILE_TOGGLE_SHOW
-        });
-    }
-    console.log(profileState)
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(changeName(value));
+        setValue('');
+    };
+
+    const handleChange = (e) => {
+        setValue(e.target.value);
+    };
+    
     return (
     <>
-    <h2>This is profile</h2>
-    <input type='checkbox' onChange={toggleShow}/>
-    {profileState.show && <div>This depends on golbal redux state</div>}
+    <h2>This is profile of {name} </h2>
+    <form action='' onSubmit={handleSubmit} >
+    <input value={value} onChange={handleChange} />
+    <button onSubmit={handleSubmit} >Save name</button>
+    </form>
     </>
     )
 }

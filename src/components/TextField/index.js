@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { MyButton } from '../Button';
-import { AUTHORS } from '../../constants';
+import { useInput } from '../Utils/useInput';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,21 +14,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function MyTextField({onSendMessage}) {
-  const [value, setValue] = useState('');
+  const { value, handleChange, reset } = useInput('');
   const [valueError, setValueError] = useState(false);
   
   const handleSubmit = (e) => {
       e.preventDefault();
 
       onSendMessage({
-          author: AUTHORS.human,
           id: Date.now(),
           text: value,
       });
 
       if (value !== '') {
         setValueError(false)
-        setValue('')
+        reset()
       } else {
         setValueError(true)
     }
@@ -41,7 +40,7 @@ export function MyTextField({onSendMessage}) {
       <TextField 
       value={value}
       autoFocus={true}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={handleChange}
       label="Enter your message"
       id="outlined-basic" 
       variant="outlined"

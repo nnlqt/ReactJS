@@ -1,7 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const NoChat = () => {
     return(
-    <h2> Please select a chat</h2>
+    <>
+    <div> Please select a chat</div>
+    <Link to='/chats'>Chats</Link>
+    </>
     )
 }
