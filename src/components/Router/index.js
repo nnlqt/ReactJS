@@ -1,6 +1,7 @@
 import {React, useState} from 'react';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import Chats from '../Chats';
+import { News } from '../News';
 import { NoChat } from '../NoChat';
 import { Profile } from '../Profile';
 import { ThemeContext } from '../Utils/ThemeContext';
@@ -16,6 +17,7 @@ export const Router = () => {
             <ul>
                 <li style={{ backgroundColor: bgColor }} ><Link to='/chats'>Chats</Link></li>
                 <li style={{ backgroundColor: bgColor }} ><Link to='/profile'>Profile</Link></li>
+                <li style={{ backgroundColor: bgColor }} ><Link to='/news'>News</Link></li>
             </ul>
 
             <Switch>
@@ -24,6 +26,9 @@ export const Router = () => {
                 </Route>
                 <Route exact path='/chats/:chatId?'>
                     <Chats />
+                </Route>
+                <Route exact path='/news'>
+                    <News />
                 </Route>
                 <Route path='/profile' exact>
                     <Profile />
