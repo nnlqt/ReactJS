@@ -1,0 +1,46 @@
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 9vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding-left: 5vh;
+}
+
+.App-page {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  box-shadow: 6px 4px 35px rgba(0, 0, 0, 0.51);
+}
+
+.App-bord {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: calc(80vh - 10vh);
+  max-height: calc(80vh - 10vh);
+  background-color: #8f8888;
+  padding: 5vh 5vh 5vh 5vh;
+  gap: 1vh;
+  width: 100%;
+}
+
+.App-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.App-footer {
+  background-color: #282c34;
+  min-height: 9vh;
+}
