@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { Link } from 'react-router-dom';
-import { ThemeContext } from '../Utils/ThemeContext';
 import { AddChat } from './AddChat';
 import { ChatItem } from './ChatItem';
 
@@ -32,10 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function ChatList({ chats, onDeleteChat }) {
+export const ChatList = ({ chats, onDeleteChat, onAddChat}) => {
 
   const classes = useStyles();
-  const theme = useContext(ThemeContext);
   return (
     <div className={classes.root}>
         <List     
@@ -45,9 +42,9 @@ export function ChatList({ chats, onDeleteChat }) {
           backgroundColor: '#8f8888',
           gap: '5px'
           }}> 
-          <button onClick={theme.changeTheme}>Color</button>
+          <button>Color</button>
           {Object.values(chats).map((c) => <ChatItem name = {c.name} key={c.id} id={c.id} onDelete={onDeleteChat} />)}
-            <ListItem><AddChat /></ListItem>
+            <ListItem><AddChat onAddChat={onAddChat} /></ListItem>
         </List>
     </div>
   );

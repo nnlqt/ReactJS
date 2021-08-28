@@ -5,15 +5,18 @@ import storage from 'redux-persist/lib/storage';
 import { chatsReducer } from './chats/reducer';
 import { profileReducer } from './profile/reducer';
 import { articlesReducer } from './articles/reducer';
+import { middleware } from "./middlewares";
+import { messagesReducer } from "./messages/reducer";
 
 const persistConfig = {
-    key: 'GD-messanger',
+    key: 'My-messanger',
     storage,
 }
 
 const rootReducer = combineReducers({
     chats: chatsReducer,
     profile: profileReducer,
+    messages: messagesReducer,
     articles: articlesReducer,
 });
 

@@ -1,36 +1,39 @@
 import './Chats.css';
-import { useCallback } from 'react';
+import firebase from 'firebase';
+import { useCallback, useEffect } from 'react';
 import { MessageBord } from '../MessageBord/MessageBord.js';
 import { MyTextField } from '../TextField';
 import { ChatList } from '../ChatList';
-import { useHistory, useParams, } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteChat, sendMessageWithReply } from '../../store/chats/actions';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectName } from '../../store/profile/selectors';
+import { selectChats } from "../../store/chats/selectors";
+import { selectMessages } from "../../store/messages/selectors";
+import { connectChatsToFB } from "../../store/chats/actions";
+import { connectMessagesToFB, sendMessageWithFB } from "../../store/messages/actions";
+
 
 function Chats() {
+  const db = firebase.database();
   const { chatId } = useParams();
-  const history = useHistory();
 
-
-  const chats = useSelector(state => state.chats);
-  const name = useSelector(selectName);
   const dispatch = useDispatch();
+  const chats = useSelector(selectChats);
+  const messages = useSelector(selectMessages);
+  const name = useSelector(selectName);
+
+  useEffect(() => {
+    dispatch(connectChatsToFB());
+    dispatch(connectMessagesToFB());
+  }, []);
 
   const handleSendMessage = useCallback(
     (newMessage) => {
-      dispatch(sendMessageWithReply(chatId, {...newMessage, author: name}));
+      dispatch(sendMessageWithFB(chatId, { ...newMessage, author: name }));
     },
-  [chatId]
+    [chatId, name, dispatch]
   );
 
-    const handleDeleteChat = useCallback((id) => {
-      dispatch(deleteChat(id));
-    }, {});
-
-    if (!!chatId && !chats[chatId]) {
-      history.replace('/nochat')
-    }
   return (
     <div className="App">
       <header className="App-header">
@@ -39,11 +42,11 @@ function Chats() {
         </h1>
       </header>
       <section className='App-page'>
-      <ChatList chats={chats} onDeleteChat={handleDeleteChat} />
-      {chats[chatId] !== ChatList.id ? chatId && <main className="App-bord">
-        <MessageBord messages={chats[chatId].messages} />
+      <ChatList chats={chats} />
+      {!!chatId && (<main className="App-bord">
+        <MessageBord messages={messages[chatId] || []} />
         <MyTextField onSendMessage={handleSendMessage} />
-      </main> : <p>Please select or create a chat</p>}
+      </main>)}
       </section> 
       <footer className="App-footer"></footer>
     </div>

@@ -1,10 +1,14 @@
 import { ListItem } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { deleteChatWithFB } from "../../store/chats/actions";
 
 export const ChatItem = ({ id, name, onDelete}) => {
+    const dispatch = useDispatch();
+    
     const handleDelete = () => {
-        onDelete(id);
+        dispatch(deleteChatWithFB(id));
     }
     return (
         <ListItem

@@ -1,5 +1,7 @@
+import { ADD_CHAT, SEND_MESSAGE, DELETE_CHAT, SET_CHATS, SET_ERROR } from "./actionTypes";
 import { AUTHORS } from "../../constants";
-import { ADD_CHAT, DELETE_CHAT, SEND_MESSAGE } from "./actionTypes";
+
+import { db } from "../../services/firebase";
 
 export const addChat = (chatId, name) => ({
     type: ADD_CHAT,
@@ -37,3 +39,53 @@ export const sendMessageWithReply = (chatId, message) => (dispatch) => {
         );
     }, 1000);
 };
+
+// firebase
+
+const setChats = (chats) => ({
+    type: SET_CHATS,
+    payload: chats,
+  });
+  
+  const setError = (error) => ({
+    type: SET_ERROR,
+    payload: error,
+  });
+  
+  export const connectChatsToFB = () => (dispatch) => {
+    try {
+      db.ref("chats").off();
+      db.ref("chats").on("value", (snapshot) => {
+        let newChats = {};
+        snapshot.forEach((snap) => {
+          const currentChat = snap.val();
+          newChats[currentChat.id] = currentChat;
+        });
+    
+        dispatch(setChats(newChats));
+      });
+    } catch (e) {
+      dispatch(setError(e.message));
+    }
+  };
+  
+  export const addChatWithFB = (name) => (dispatch) => {
+    try {
+      const id = `chat-${Date.now()}`;
+    
+      db.ref("chats").child(id).set({
+        name,
+        id,
+      });
+    } catch (e) {
+      dispatch(setError(e.message));
+    }
+  }
+  
+  export const deleteChatWithFB = (id) => (dispatch) => {
+    try {
+      db.ref("chats").child(id).remove();
+    } catch (e) {
+      dispatch(setError(e.message));
+    }
+  };
