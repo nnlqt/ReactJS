@@ -1,20 +1,21 @@
-import './Chats.css';
-import firebase from 'firebase';
-import { useCallback, useEffect } from 'react';
-import { MessageBord } from '../MessageBord/MessageBord.js';
-import { MyTextField } from '../TextField';
-import { ChatList } from '../ChatList';
+import './style.css';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { MyTextField } from '../TextField';
+import { MessageBord } from '../MessageBord/MessageBord.js';
+import { ChatList } from '../ChatList';
 import { selectName } from '../../store/profile/selectors';
 import { selectChats } from "../../store/chats/selectors";
 import { selectMessages } from "../../store/messages/selectors";
 import { connectChatsToFB } from "../../store/chats/actions";
 import { connectMessagesToFB, sendMessageWithFB } from "../../store/messages/actions";
+import { Header } from '../Header';
+import { Footer } from '../Footer';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
 function Chats() {
-  const db = firebase.database();
   const { chatId } = useParams();
 
   const dispatch = useDispatch();
@@ -34,23 +35,39 @@ function Chats() {
     [chatId, name, dispatch]
   );
 
+  const mob = useMediaQuery("(max-width:600px)");
+  if (mob) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>
-          Welcome to #MyChat
-        </h1>
-      </header>
-      <section className='App-page'>
-      <ChatList chats={chats} />
-      {!!chatId && (<main className="App-bord">
-        <MessageBord messages={messages[chatId] || []} />
+    <>
+      <Header />
+      <section className='Chats__page center'>
+      <div className='Chats__box'>
+      {!chatId ? <ChatList chats={chats} /> : (<main className="Chats__bord">
+        <MessageBord  messages={messages[chatId] || []} />
         <MyTextField onSendMessage={handleSendMessage} />
-      </main>)}
-      </section> 
-      <footer className="App-footer"></footer>
-    </div>
+      </main>)} 
+      </div> 
+      </section>
+      <Footer />
+    </>
   );
+  } else {
+    return (
+      <>
+        <Header />
+        <section className='Chats__page center'>
+        <div className='Chats__box'>
+        <ChatList chats={chats} />
+        {!!chatId && (<main className="Chats__bord">
+          <MessageBord  messages={messages[chatId] || []} />
+          <MyTextField onSendMessage={handleSendMessage} />
+        </main>)}
+        </div> 
+        </section>
+        <Footer />
+      </>
+    );
+  }
 }
 
 export default Chats;

@@ -1,0 +1,12 @@
+.AddChat__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #eee;
+}
+
+.ChatItem__link {
+    text-decoration: none;
+    color: #eee;
+}

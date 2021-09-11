@@ -1,21 +1,13 @@
-import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useEffect, useRef} from 'react';
 import TextField from '@material-ui/core/TextField';
-import { MyButton } from '../Button';
-import { useInput } from '../Utils/useInput';
+import { SendButton } from '../Button/sendButton';
+import { useInput } from '../../utils/useInput';
+import './style.css';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-}));
-
-export function MyTextField({onSendMessage}) {
+export const  MyTextField = ({ onSendMessage }) => {
+  const inputRef = useRef();
   const { value, handleChange, reset } = useInput('');
-  const [valueError, setValueError] = useState(false);
   
   const handleSubmit = (e) => {
       e.preventDefault();
@@ -24,31 +16,51 @@ export function MyTextField({onSendMessage}) {
           id: Date.now(),
           text: value,
       });
+      reset();
+      }
 
-      if (value !== '') {
-        setValueError(false)
-        reset()
-      } else {
-        setValueError(true)
-    }
+      useEffect(() => {
+        inputRef.current?.focus();
+      }, []);
+
+      const mob = useMediaQuery("(max-width:800px)");
+      if (mob) {
+        return (
+        <form id='send' className='TextField__form' noValidate autoComplete="off" onSubmit={handleSubmit} >
+        <TextField 
+        ref={inputRef}
+        value={value}
+        autoFocus={true}
+        onChange={handleChange}
+        label="Enter your message"
+        id="outlined-basic" 
+        variant="outlined"
+        size='small'
+        InputProps = {{ style: {fontSize: '12px'}}}
+        InputLabelProps = {{ style: {fontSize: '12px'}}}
+        style={{ 
+          margin: '0'
+        }}/>
+        <SendButton />
+      </form>
+    );
+  } else {
+    return (
+      <form id='send' className='TextField__form' noValidate autoComplete="off" onSubmit={handleSubmit} >
+        <TextField 
+        ref={inputRef}
+        value={value}
+        autoFocus={true}
+        onChange={handleChange}
+        label="Enter your message"
+        id="outlined-basic" 
+        variant="outlined"
+        size='small'
+        style={{ 
+          margin: '0'
+        }}/>
+        <SendButton />
+      </form>
+    );
   }
-
-  const classes = useStyles();
-
-  return (
-    <form id='send' className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit} >
-      <TextField 
-      value={value}
-      autoFocus={true}
-      onChange={handleChange}
-      label="Enter your message"
-      id="outlined-basic" 
-      variant="outlined"
-      style={{ 
-        margin: '0'
-      }}
-      error={valueError}  />
-      <MyButton />
-    </form>
-  );
 }

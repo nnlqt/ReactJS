@@ -1,6 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logoutWithFB } from "../../store/profile/actions";
+import { HeaderButton } from "../Header/HeaderButton";
+import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
+
 
 export const Logout = () => {
   const dispatch = useDispatch();
@@ -9,5 +12,7 @@ export const Logout = () => {
     dispatch(logoutWithFB());
   };
 
-  return <button onClick={handleClick}>Logout</button>;
+  return <HeaderButton onClick={handleClick}
+  icon={<ExitToAppTwoToneIcon />}text={'Logout'}
+  ></HeaderButton>;
 };

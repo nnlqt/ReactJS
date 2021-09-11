@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -30,21 +30,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ChatList = ({ chats, onDeleteChat, onAddChat}) => {
+export const ChatList = ({ chats, onAddChat }) => {
 
   const classes = useStyles();
   return (
     <div className={classes.root}>
-        <List     
+        <List    
           style={{
           display: 'flex',
-          flexDirection: "column",
-          backgroundColor: '#8f8888',
-          gap: '5px'
+          flexDirection: "column-reverse",
+          backgroundColor: '#0000000',
+          justifyContent: 'flex-end',
+          gap: '5px',
+          width: '100%',
+          padding: '2vh',
           }}> 
-          <button>Color</button>
-          {Object.values(chats).map((c) => <ChatItem name = {c.name} key={c.id} id={c.id} onDelete={onDeleteChat} />)}
-            <ListItem><AddChat onAddChat={onAddChat} /></ListItem>
+          {Object.values(chats).map((c) => <ChatItem name = {c.name} key={c.id} id={c.id} />)}
+            <ListItem style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <AddChat onAddChat={onAddChat} />
+            </ListItem>
         </List>
     </div>
   );
