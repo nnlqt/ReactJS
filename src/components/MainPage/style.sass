@@ -1,0 +1,46 @@
+.center
+    padding-left: calc(50% - 570px)
+    padding-right: calc(50% - 570px)
+
+.MainPage
+    display: flex
+    flex: 1 1 auto
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    gap: 5vh
+    background-color: #000000
+    color: #eee
+
+    &__header
+        font-size: 5vh
+        font-weight: 600
+
+    &__tags
+        display: flex
+        flex-direction: row
+        justify-content: center
+        align-items: center
+        gap: 5vh
+
+    &__links
+        filter: brightness(0.8)
+        transition: all .5s
+        &:hover
+            transform: scale(1.05)
+            filter: brightness(1)
+
+@media (max-width: 1023px)
+    .center
+        padding-left: calc(50% - 368px)
+        padding-right: calc(50% - 368px)
+
+@media (max-width: 767px)
+    .center
+        padding-left: calc(50% - 212px)
+        padding-right: calc(50% - 212px)
+
+@media ( max-width: 425px )
+    .center
+        padding-left: 24px
+        padding-right: 24px

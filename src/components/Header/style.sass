@@ -1,0 +1,84 @@
+*
+    text-decoration: none
+
+.center
+    padding-left: calc(50% - 570px)
+    padding-right: calc(50% - 570px)
+
+.Router
+    display: flex
+    justify-content: space-around
+    background-color: #000000
+    &__ul
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        justify-content: center
+        align-items: center
+        margin: 0
+        padding: 0
+    &__li
+        list-style-type: none
+
+.RouterMob
+    min-height: 10vh
+    background-color: #000000
+
+.bm-burger-button
+    position: fixed
+    width: 26px
+    height: 17px
+    right: 20px
+    top: 20px
+    color: #eee
+
+.bm-burger-bars
+    background: #eee
+    &-hover
+        background: #373a47
+
+.bm-cross-button
+    height: 24px
+    width: 24px
+
+.bm-cross
+    background: #eee
+
+.bm-menu-wrap
+    position: fixed
+    height: 100%
+
+.bm-menu
+    background-color: #000000
+    padding: 2.5em 1.5em 0
+    font-size: 1.15em
+
+.bm-morph-shape
+    fill: #373a47
+
+.bm-item-list
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 1vh
+
+.bm-item
+    display: inline-block
+
+.bm-overlay
+    background: rgba(0, 0, 0, 0.3)
+
+@media (max-width: 1023px)
+    .center
+        padding-left: calc(50% - 368px)
+        padding-right: calc(50% - 368px)
+
+@media (max-width: 767px)
+    .center
+        padding-left: calc(50% - 212px)
+        padding-right: calc(50% - 212px)
+
+@media ( max-width: 425px )
+    .center
+        padding-left: 24px
+        padding-right: 24px
